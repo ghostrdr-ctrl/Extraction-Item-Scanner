@@ -27,6 +27,9 @@ from version import __version__
 REPO = "ghostrdr-ctrl/Extraction-Item-Scanner"
 API_LATEST = f"https://api.github.com/repos/{REPO}/releases/latest"
 RELEASES_PAGE = f"https://github.com/{REPO}/releases"
+# Preferred asset name. Note GitHub sanitizes spaces to dots on upload
+# (-> "Extraction.Item.Scanner.exe"), so check_for_update also falls back to
+# matching any ".exe" asset.
 ASSET_NAME = "Extraction Item Scanner.exe"
 _TIMEOUT = 15
 
@@ -91,11 +94,20 @@ def check_for_update() -> UpdateInfo:
     with _urlopen(API_LATEST) as resp:
         data = json.load(resp)
     latest_tag = data.get("tag_name", "") or ""
+
+    # Find the downloadable exe. GitHub sanitizes asset filenames (spaces become
+    # dots), so match the exact name first, then fall back to any .exe asset.
+    assets = data.get("assets", [])
     asset_url = ""
-    for asset in data.get("assets", []):
+    for asset in assets:
         if asset.get("name") == ASSET_NAME:
             asset_url = asset.get("browser_download_url", "")
             break
+    if not asset_url:
+        for asset in assets:
+            if str(asset.get("name", "")).lower().endswith(".exe"):
+                asset_url = asset.get("browser_download_url", "")
+                break
     return UpdateInfo(
         latest_tag=latest_tag,
         url=asset_url,
