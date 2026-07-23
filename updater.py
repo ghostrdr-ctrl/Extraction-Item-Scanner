@@ -27,10 +27,12 @@ from version import __version__
 REPO = "ghostrdr-ctrl/Extraction-Item-Scanner"
 API_LATEST = f"https://api.github.com/repos/{REPO}/releases/latest"
 RELEASES_PAGE = f"https://github.com/{REPO}/releases"
-# Preferred asset name. Note GitHub sanitizes spaces to dots on upload
-# (-> "Extraction.Item.Scanner.exe"), so check_for_update also falls back to
-# matching any ".exe" asset.
-ASSET_NAME = "Extraction Item Scanner.exe"
+# Release asset filename. GitHub does not allow spaces in asset names (it
+# rewrites them to dots), so the uploaded asset is kept space-free to stay an
+# exact match. check_for_update also falls back to any ".exe" asset for safety.
+# (The app the user runs is still "Extraction Item Scanner.exe" -- self-update
+# writes over the current exe's path and keeps its name.)
+ASSET_NAME = "ExtractionItemScanner.exe"
 _TIMEOUT = 15
 
 
