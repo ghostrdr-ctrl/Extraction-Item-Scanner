@@ -1,0 +1,5 @@
+# Runtime: none -- the app uses only the Python standard library (tkinter,
+# json, xml.etree). Tkinter ships with the standard python.org Windows build.
+#
+# Build-time only (for producing the .exe):
+pyinstaller>=6.0

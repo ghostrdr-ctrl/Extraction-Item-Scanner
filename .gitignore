@@ -1,0 +1,19 @@
+# PyInstaller build output
+build/
+dist/
+*.spec
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# App config
+.extraction_scanner.json
+
+# Store extraction data is customer data -- never commit it to the repo.
+# Ignore any data files anywhere in the tree as a safety net.
+Example/
+*.json
+*.xml
