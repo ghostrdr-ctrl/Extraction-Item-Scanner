@@ -145,7 +145,7 @@ class ScannerApp(tk.Tk):
 
         # Clean up any leftover file from a previous self-update, then check
         # GitHub for a newer release in the background (silent if none / offline).
-        updater.cleanup_old()
+        self._cleanup_old_retry(6)
         self.after(800, lambda: self.check_updates(manual=False))
 
         cfg = load_config()
@@ -449,6 +449,13 @@ class ScannerApp(tk.Tk):
                                   f"Check the code or search by description.", fg=MISS)
 
     # -- updates ------------------------------------------------------------
+
+    def _cleanup_old_retry(self, attempts: int):
+        """Delete the leftover *.old from a self-update, retrying while the
+        just-replaced process still holds it locked."""
+        if updater.cleanup_old() or attempts <= 0:
+            return
+        self.after(2500, lambda: self._cleanup_old_retry(attempts - 1))
 
     def check_updates(self, manual: bool):
         """Kick off a background check against GitHub Releases.

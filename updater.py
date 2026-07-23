@@ -122,14 +122,24 @@ def check_for_update() -> UpdateInfo:
 # Applying an update (frozen build only)
 # ---------------------------------------------------------------------------
 
-def cleanup_old() -> None:
-    """Remove the leftover ``*.old`` file from a previous self-update."""
+def cleanup_old() -> bool:
+    """Remove the leftover ``*.old`` file from a previous self-update.
+
+    Returns True if there is nothing left to clean (either no ``*.old`` file or
+    it was removed), False if the file still exists and is locked -- the caller
+    should retry shortly, since the just-replaced old process may not have fully
+    exited and released the file yet.
+    """
     if not is_frozen():
-        return
+        return True
+    old = current_exe() + ".old"
+    if not os.path.exists(old):
+        return True
     try:
-        os.remove(current_exe() + ".old")
+        os.remove(old)
+        return True
     except OSError:
-        pass
+        return False
 
 
 def download_and_apply(url: str, progress_cb=None) -> str:

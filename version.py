@@ -5,4 +5,4 @@ update. The in-app updater compares this value against the latest GitHub
 release tag to decide whether an update is available.
 """
 
-__version__ = "1.1.1"
+__version__ = "1.1.2"
