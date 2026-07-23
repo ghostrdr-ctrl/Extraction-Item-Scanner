@@ -2,14 +2,14 @@
 
     python build.py
 
-Produces dist/ExtractionItemScanner.exe -- a single, double-clickable file with
-no Python install required on the target machine.
+Produces "dist/Extraction Item Scanner.exe" -- a single, double-clickable file
+with no Python install required on the target machine.
 """
 
 import subprocess
 import sys
 
-NAME = "ExtractionItemScanner"
+NAME = "Extraction Item Scanner"
 
 
 def main() -> int:
@@ -19,7 +19,8 @@ def main() -> int:
         "--onefile",        # single .exe
         "--windowed",       # no console window
         "--name", NAME,
-        "--add-data", "item_index.py;.",
+        "--icon", "icon.ico",           # exe / taskbar icon
+        "--add-data", "icon.ico;.",     # bundled so the window can load it too
         "app.py",
     ]
     print(">", " ".join(cmd))

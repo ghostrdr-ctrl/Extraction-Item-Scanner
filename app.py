@@ -69,6 +69,12 @@ def save_config(cfg: dict) -> None:
         pass
 
 
+def resource_path(name: str) -> str:
+    """Path to a bundled resource, working both from source and the frozen exe."""
+    base = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base, name)
+
+
 # ---------------------------------------------------------------------------
 # High-DPI support (Windows)
 # ---------------------------------------------------------------------------
@@ -117,6 +123,10 @@ class ScannerApp(tk.Tk):
         self.scale = max(1.0, self.winfo_fpixels("1i") / 96.0)
 
         self.title(f"{APP_TITLE}  v{__version__}")
+        try:
+            self.iconbitmap(resource_path("icon.ico"))
+        except Exception:
+            pass  # icon is cosmetic; never let it block startup
         self.geometry(f"{self._px(980)}x{self._px(680)}")
         self.minsize(self._px(760), self._px(520))
         self.configure(bg=BG)

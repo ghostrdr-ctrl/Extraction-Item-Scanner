@@ -24,7 +24,7 @@ The matched price is shown in a large, register-friendly panel.
 
 ## Download & run (no install)
 
-Grab the latest **`ExtractionItemScanner.exe`** from the
+Grab the latest **`Extraction Item Scanner.exe`** from the
 [**Releases**](https://github.com/ghostrdr-ctrl/Extraction-Item-Scanner/releases/latest)
 page and double-click it. No Python, no install.
 
@@ -66,23 +66,23 @@ pip install -r requirements.txt      # installs PyInstaller (build-time only)
 python build.py
 ```
 
-The result is **`dist/ExtractionItemScanner.exe`** - a single double-clickable
+The result is **`"dist/Extraction Item Scanner.exe"`** - a single double-clickable
 file. Copy it to the counter PC and run it.
 
 ## Cutting a release (for maintainers)
 
 1. Bump `__version__` in **`version.py`** (e.g. `1.1.0` → `1.2.0`).
-2. `python build.py` to produce `dist/ExtractionItemScanner.exe`.
+2. `python build.py` to produce `"dist/Extraction Item Scanner.exe"`.
 3. Create a GitHub release whose **tag matches** the version, prefixed with `v`
    (e.g. `v1.2.0`), and attach the `.exe`:
    ```sh
-   gh release create v1.2.0 dist/ExtractionItemScanner.exe \
+   gh release create v1.2.0 "dist/Extraction Item Scanner.exe" \
      --title "v1.2.0" --notes "What changed…"
    ```
 
 Installed apps compare their `version.py` against the latest release tag, so the
 tag **must** be greater for the update prompt to appear. The attached asset must
-be named `ExtractionItemScanner.exe`.
+be named `Extraction Item Scanner.exe`.
 
 > The self-update download requires the repository to be **public** (it fetches
 > the release asset without authentication). While the repo is private, the
@@ -124,6 +124,7 @@ item_index.py        Format detection, parsing, and the search/scan index (no GU
 updater.py           GitHub-release update check + self-replace
 version.py           Single source of truth for the app version
 build.py             PyInstaller one-file build
+icon.ico             App icon (exe, taskbar, and window)
 requirements.txt     Build-time dependency (PyInstaller)
 ```
 

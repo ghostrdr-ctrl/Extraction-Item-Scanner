@@ -27,7 +27,7 @@ from version import __version__
 REPO = "ghostrdr-ctrl/Extraction-Item-Scanner"
 API_LATEST = f"https://api.github.com/repos/{REPO}/releases/latest"
 RELEASES_PAGE = f"https://github.com/{REPO}/releases"
-ASSET_NAME = "ExtractionItemScanner.exe"
+ASSET_NAME = "Extraction Item Scanner.exe"
 _TIMEOUT = 15
 
 
